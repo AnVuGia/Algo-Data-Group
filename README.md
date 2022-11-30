@@ -16,7 +16,7 @@ ___
 
 #### CONTRIBUTOR 3: [LE CAM TU](https://github.com/toulletou03) (ID: s3915195)
 
-#### CONTRIBUTOR 4: [VU GIA THINH](https://github.com/) (ID: )
+#### CONTRIBUTOR 4: [VU GIA THINH](https://github.com/thinhvu3500) (ID: s3820373)
 
 ___
 
