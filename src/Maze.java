@@ -67,13 +67,71 @@ public class Maze {
 }
 
 class Robot {
-    // A very simple implementation
-    // where the robot just go randomly
-    public void navigate() {
-        Maze maze = new Maze();
-        String result = "";
-        while (!result.equals("win")) {
 
+    private String _UP = "UP";
+    private String _DOWN = "DOWN";
+    private String _LEFT = "LEFT";
+    private String _RIGHT = "RIGHT";
+
+    public void navigate() {
+        VisitedMap visitedMap = new VisitedMap();
+        Maze maze = new Maze();
+        int relative_x = 0;
+        int relative_y = 0;
+        String result = "";
+        searchRecur(relative_x,relative_y,result,maze,visitedMap);
+    }
+
+    private boolean searchRecur(int x, int y, String result, Maze maze, VisitedMap visitedMap) {
+
+        if (!visitedMap.isVisited(x, y + 1)) { // go up
+            String state = maze.go(_UP);
+            if (state.equals("win")) {
+                visitedMap.clear();
+                System.out.println(result);
+                return true;
+            } else if (state.equals("true")) {
+                result += _UP + " ";
+                searchRecur(x, y + 1, result, maze, visitedMap);
+                return true;
+            }
         }
+        if (!visitedMap.isVisited(x+ 1, y )) { // go right
+            String state = maze.go(_RIGHT);
+            if (state.equals("win")) {
+                System.out.println(result);
+                visitedMap.clear();
+                return true;
+            } else if (state.equals("true")) {
+                result += _RIGHT + " ";
+                searchRecur(x+ 1, y , result, maze, visitedMap);
+                return true;
+            }
+        }
+        if (!visitedMap.isVisited(x, y - 1)) { // go down
+            String state = maze.go(_DOWN);
+            if (state.equals("win")) {
+                System.out.println(result);
+                visitedMap.clear();
+                return true;
+            } else if (state.equals("true")) {
+                result += _DOWN + " ";
+                searchRecur(x, y - 1, result, maze, visitedMap);
+                return true;
+            }
+        }
+        if (!visitedMap.isVisited(x- 1, y )) { // go left
+            String state = maze.go(_LEFT);
+            if (state.equals("win")) {
+                visitedMap.clear();
+                System.out.println(result);
+                return true;
+            } else if (state.equals("true")) {
+                result += _LEFT + " ";
+                searchRecur(x- 1, y , result, maze, visitedMap);
+                return true;
+            }
+        }
+        return false;
     }
 }
