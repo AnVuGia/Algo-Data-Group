@@ -9,13 +9,15 @@ public class Maze {
     public Maze() {
         // Note: in my real test, I will create much larger
         // and more complicated map
-        rows = 4;
-        cols = 5;
+        rows = 6;
+        cols = 6;
         map = new String[rows];
-        map[0] = ".....";
-        map[1] = ".   X";
-        map[2] = ".   .";
-        map[3] = ".....";
+        map[0] = "......";
+        map[1] = ". .. X";
+        map[2] = ". .. .";
+        map[3] = ". .  .";
+        map[4] = ".    .";
+        map[5] = "......";
         robotRow = 2;
         robotCol = 1;
         steps = 0;
@@ -83,55 +85,52 @@ class Robot {
     }
 
     private boolean searchRecur(int x, int y, String result, Maze maze, VisitedMap visitedMap) {
-
+        System.out.println(x+" "+y);
         if (!visitedMap.isVisited(x, y + 1)) { // go up
             String state = maze.go(_UP);
             if (state.equals("win")) {
                 visitedMap.clear();
-                System.out.println(result);
+                System.out.println(result+  _UP);
                 return true;
             } else if (state.equals("true")) {
-                result += _UP + " ";
-                searchRecur(x, y + 1, result, maze, visitedMap);
-                return true;
+                String new_result = result + _UP + " "  ;
+                searchRecur(x, y + 1, new_result, maze, visitedMap);
             }
         }
         if (!visitedMap.isVisited(x+ 1, y )) { // go right
             String state = maze.go(_RIGHT);
             if (state.equals("win")) {
-                System.out.println(result);
+                System.out.println(result + _RIGHT);
                 visitedMap.clear();
                 return true;
             } else if (state.equals("true")) {
-                result += _RIGHT + " ";
-                searchRecur(x+ 1, y , result, maze, visitedMap);
-                return true;
+                String new_result = result + _RIGHT + " "  ;
+                searchRecur(x+ 1, y , new_result, maze, visitedMap);
             }
         }
         if (!visitedMap.isVisited(x, y - 1)) { // go down
             String state = maze.go(_DOWN);
             if (state.equals("win")) {
-                System.out.println(result);
+                System.out.println(result + _DOWN);
                 visitedMap.clear();
                 return true;
             } else if (state.equals("true")) {
-                result += _DOWN + " ";
-                searchRecur(x, y - 1, result, maze, visitedMap);
-                return true;
+                String new_result = result + _DOWN + " "  ;
+                searchRecur(x, y - 1, new_result, maze, visitedMap);
             }
         }
         if (!visitedMap.isVisited(x- 1, y )) { // go left
             String state = maze.go(_LEFT);
             if (state.equals("win")) {
                 visitedMap.clear();
-                System.out.println(result);
+                System.out.println(result + _LEFT);
                 return true;
             } else if (state.equals("true")) {
-                result += _LEFT + " ";
-                searchRecur(x- 1, y , result, maze, visitedMap);
-                return true;
+                String new_result = result + _LEFT + " "  ;
+                searchRecur(x- 1, y , new_result, maze, visitedMap);
             }
         }
+        System.out.println("return call stack");
         return false;
     }
 }
