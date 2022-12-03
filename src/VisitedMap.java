@@ -23,7 +23,7 @@ public class VisitedMap {
                 return true;
             }
             arr2[abs_x][abs_y] = 1;     //is not visited
-            System.out.println("Mark arr2 " + x + " " + y);
+            System.out.println("Mark arr2 " + x + " " + y); //print out to test
             return false;
         }
         if(x <= 0 && y >= 0){    // section 1
@@ -52,12 +52,12 @@ public class VisitedMap {
         }
         return true;
     }
-    private void outOfBound(int x, int y){
+    private void outOfBound(int x, int y){  //function to calculate and re-allocate new position for the map
         int new_x = x >= 500 ?  (MAX_COLUMN - Math.abs(x))*-1 : x*-1;
         int new_y =  y >= 500 ?  (MAX_COLUMN - Math.abs(y))*-1 : y*-1;
         isVisited(new_x,new_y);
     }
-    public void clear(){
+    public void clear(){    //set clear state
         isClear = true;
     }
 }

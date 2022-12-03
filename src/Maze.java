@@ -88,13 +88,13 @@ class Robot {
         System.out.println(x+" "+y);
         if (!visitedMap.isVisited(x, y + 1)) { // go up
             String state = maze.go(_UP);
-            if (state.equals("win")) {
-                visitedMap.clear();
+            if (state.equals("win")) {  //check if condition is match
+                visitedMap.clear();     //set boolean state in VisitedMap
                 System.out.println(result+  _UP);
                 return true;
             } else if (state.equals("true")) {
                 String new_result = result + _UP + " "  ;
-                searchRecur(x, y + 1, new_result, maze, visitedMap);
+                searchRecur(x, y + 1, new_result, maze, visitedMap);    //continue with the next position
             }
         }
         if (!visitedMap.isVisited(x+ 1, y )) { // go right
@@ -131,6 +131,6 @@ class Robot {
             }
         }
         System.out.println("return call stack");
-        return false;
+        return false; //no option available
     }
 }
