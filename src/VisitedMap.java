@@ -1,6 +1,9 @@
 public class VisitedMap {
     public VisitedMap() {
+        arr1[0][0] = 1;
         arr2[0][0] = 1;
+        arr3[0][0] = 1;
+        arr4[0][0] = 1;
     }
 
     private boolean isClear = false;
@@ -60,4 +63,5 @@ public class VisitedMap {
     public void clear(){    //set clear state
         isClear = true;
     }
+    public boolean isClear(){return isClear;};
 }

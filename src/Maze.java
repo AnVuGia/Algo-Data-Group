@@ -81,10 +81,10 @@ class Robot {
         int relative_x = 0;
         int relative_y = 0;
         String result = "";
-        searchRecur(relative_x,relative_y,result,maze,visitedMap);
+        searchRecur(relative_x,relative_y,result,maze,visitedMap,"");
     }
 
-    private boolean searchRecur(int x, int y, String result, Maze maze, VisitedMap visitedMap) {
+    private boolean searchRecur(int x, int y, String result, Maze maze, VisitedMap visitedMap, String prev_direc) {
         System.out.println(x+" "+y);
         if (!visitedMap.isVisited(x, y + 1)) { // go up
             String state = maze.go(_UP);
@@ -94,7 +94,7 @@ class Robot {
                 return true;
             } else if (state.equals("true")) {
                 String new_result = result + _UP + " "  ;
-                searchRecur(x, y + 1, new_result, maze, visitedMap);    //continue with the next position
+                searchRecur(x, y + 1, new_result, maze, visitedMap,_UP);    //continue with the next position
             }
         }
         if (!visitedMap.isVisited(x+ 1, y )) { // go right
@@ -105,7 +105,7 @@ class Robot {
                 return true;
             } else if (state.equals("true")) {
                 String new_result = result + _RIGHT + " "  ;
-                searchRecur(x+ 1, y , new_result, maze, visitedMap);
+                searchRecur(x+ 1, y , new_result, maze, visitedMap,_RIGHT);
             }
         }
         if (!visitedMap.isVisited(x, y - 1)) { // go down
@@ -116,7 +116,7 @@ class Robot {
                 return true;
             } else if (state.equals("true")) {
                 String new_result = result + _DOWN + " "  ;
-                searchRecur(x, y - 1, new_result, maze, visitedMap);
+                searchRecur(x, y - 1, new_result, maze, visitedMap,_DOWN);
             }
         }
         if (!visitedMap.isVisited(x- 1, y )) { // go left
@@ -127,8 +127,14 @@ class Robot {
                 return true;
             } else if (state.equals("true")) {
                 String new_result = result + _LEFT + " "  ;
-                searchRecur(x- 1, y , new_result, maze, visitedMap);
+                searchRecur(x- 1, y , new_result, maze, visitedMap,_LEFT);
             }
+        }
+        if(!visitedMap.isClear()){
+            if(prev_direc.equals(_UP)) maze.go(_DOWN);
+            else if (prev_direc.equals(_DOWN)) maze.go(_UP);
+            else if (prev_direc.equals(_LEFT)) maze.go(_RIGHT);
+            else if (prev_direc.equals(_RIGHT)) maze.go(_LEFT);
         }
         System.out.println("return call stack");
         return false; //no option available
