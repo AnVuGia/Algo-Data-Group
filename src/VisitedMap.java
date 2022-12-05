@@ -7,8 +7,8 @@ public class VisitedMap {
     }
 
     private boolean isClear = false;
-    private int MAX_ROW = 1000;
-    private int MAX_COLUMN = 1000;
+    private int MAX_ROW = 2000;
+    private int MAX_COLUMN = 2000;
     private int arr1[][] = new int[MAX_ROW/2][MAX_COLUMN/2]; // -x , y
     private int arr2[][] = new int[MAX_ROW/2][MAX_COLUMN/2]; //  x, y (0,0)
     private int arr3[][] = new int[MAX_ROW/2][MAX_COLUMN/2]; // x, -y
@@ -26,7 +26,7 @@ public class VisitedMap {
                 return true;
             }
             arr2[abs_x][abs_y] = 1;     //is not visited
-            System.out.println("Mark arr2 " + x + " " + y); //print out to test
+//            System.out.println("Mark arr2 " + x + " " + y); //print out to test
             return false;
         }
         if(x <= 0 && y >= 0){    // section 1
@@ -34,7 +34,7 @@ public class VisitedMap {
                 return true;
             }
             arr1[abs_x][abs_y] = 1;
-            System.out.println("Mark arr1 " + x + " " + y);
+//            System.out.println("Mark arr1 " + x + " " + y);
             return false;
         }
         if(x >= 0 && y <= 0){ //section 3
@@ -42,7 +42,7 @@ public class VisitedMap {
                 return true;
             }
             arr3[abs_x][abs_y] = 1;
-            System.out.println("Mark arr3 " + x + " " + y);
+//            System.out.println("Mark arr3 " + x + " " + y);
             return false;
         }
         if(x <= 0 && y <= 0){ //section 4
@@ -50,16 +50,17 @@ public class VisitedMap {
                 return true;
             }
             arr4[abs_x][abs_y] = 1;
-            System.out.println("Mark arr4 " + x + " " + y);
+//            System.out.println("Mark arr4 " + x + " " + y);
             return false;
         }
         return true;
     }
-    private void outOfBound(int x, int y){  //function to calculate and re-allocate new position for the map
-        int new_x = x >= 500 ?  (MAX_COLUMN - Math.abs(x))*-1 : x*-1;
-        int new_y =  y >= 500 ?  (MAX_COLUMN - Math.abs(y))*-1 : y*-1;
-        isVisited(new_x,new_y);
-    }
+    //leave it here just in case
+//    private void outOfBound(int x, int y){  //function to calculate and re-allocate new position for the map
+//        int new_x = x >= 500 ?  (MAX_COLUMN - Math.abs(x))*-1 : x*-1;
+//        int new_y =  y >= 500 ?  (MAX_COLUMN - Math.abs(y))*-1 : y*-1;
+//        isVisited(new_x,new_y);
+//    }
     public void clear(){    //set clear state
         isClear = true;
     }
