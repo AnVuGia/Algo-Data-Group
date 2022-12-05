@@ -16,9 +16,9 @@ public class VisitedMap {
 
     public boolean isVisited(int x, int y){
         if(isClear) return true;
-        if(Math.abs(x) >= MAX_COLUMN/2 || Math.abs(y) >= MAX_COLUMN/2 ){
-            outOfBound(x,y);
-        }
+//        if(Math.abs(x) >= MAX_COLUMN/2 || Math.abs(y) >= MAX_COLUMN/2 ){
+//            outOfBound(x,y);
+//        }
         int abs_x = Math.abs(x);
         int abs_y = Math.abs(y);
         if(x >= 0 && y >= 0){           //section 2
