@@ -3,28 +3,27 @@ public class GenerateMaze {
     static int height= 1000;
 
     public static void main(String[] args) {
-         int width = 1000;
-         int height= 1000;
-         System.out.print("");
-        for (int j = 0; j < width; j++)
+        int width = 1000;
+        int height = 1000;
+        System.out.print('"');
+        //top row
+        for (int j = 0; j < width; j++) {
             System.out.print(".");
-        System.out.println("");
-        for (int i = 0; i< height-2;i++)
-        {
-            System.out.print(".");
-            for (int j = 1; j < width-1; j++)
-            {
-                double temp = Math.random();
-                if (temp >0.3)
-                    System.out.print(' ');
-                else
-                    System.out.print('.');
+        }
+        //blank m*n maze
+        System.out.print('"');
+        for(int i = 1; i < height-1; i++){
+            System.out.println('"' + ".");
+            for (int j = 0; j < width-2; j++){
+                System.out.print(' ');
             }
-            System.out.println(".");
+            System.out.print( "." +'"' + ",");
         }
-        System.out.print("");
-            for (int j = 0; j < width; j++)
-                System.out.print(".");
-            System.out.println("");
+        //bottom row
+        System.out.print('"');
+        for (int j = 0; j < width; j++) {
+            System.out.print(".");
         }
+        System.out.print('"');
+    }
 }

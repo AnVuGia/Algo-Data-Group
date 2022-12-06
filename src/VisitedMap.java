@@ -53,7 +53,7 @@ public class VisitedMap {
             System.out.println("Mark arr4 " + x + " " + y);
             return false;
         }
-        return true;
+        return false;
     }
     //leave it here just in case
 //    private void outOfBound(int x, int y){  //function to calculate and re-allocate new position for the map
