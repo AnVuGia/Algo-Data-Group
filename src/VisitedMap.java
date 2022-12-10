@@ -1,56 +1,65 @@
 public class VisitedMap {
-    public VisitedMap() {
-        arr1[0][0] = 1;
-        arr2[0][0] = 1;
-        arr3[0][0] = 1;
-        arr4[0][0] = 1;
-    }
-
     private boolean isClear = false;
     private int MAX_ROW = 1001;
     private int MAX_COLUMN = 1001;
-    private int arr1[][] = new int[MAX_ROW][MAX_COLUMN]; // -x , y
-    private int arr2[][] = new int[MAX_ROW][MAX_COLUMN]; //  x, y (0,0)
-    private int arr3[][] = new int[MAX_ROW][MAX_COLUMN]; // x, -y
-    private int arr4[][] = new int[MAX_ROW][MAX_COLUMN]; // -x, -y
 
+    //declare 4 int array to indicate the 4 relative map position that
+    //the robot can possibly go
+    private boolean quad1[][] = new boolean[MAX_ROW][MAX_COLUMN]; // -x , y
+    private boolean quad2[][] = new boolean[MAX_ROW][MAX_COLUMN]; //  x, y (0,0)
+    private boolean quad3[][] = new boolean[MAX_ROW][MAX_COLUMN]; // x, -y
+    private boolean quad4[][] = new boolean[MAX_ROW][MAX_COLUMN]; // -x, -y
+
+    public VisitedMap() {
+        //initialize the construction and mark the initial position
+        //of the robot on 4 different quadrant.
+        quad1[0][0] = true;
+        quad2[0][0] = true;
+        quad3[0][0] = true;
+        quad4[0][0] = true;
+    }
     public boolean isVisited(int x, int y){
         if(isClear) return true;
 //        if(Math.abs(x) >= MAX_COLUMN/2 || Math.abs(y) >= MAX_COLUMN/2 ){
 //            outOfBound(x,y);
 //        }
+        //get the absolute coordinate of x and y to avoid
+        //the negative index
         int abs_x = Math.abs(x);
         int abs_y = Math.abs(y);
+
+        //With the current value of x and y, check if it has visited the
+        //the relative map according to the 4 quadrants
         if(x >= 0 && y >= 0){           //section 2
-            if(arr2[abs_x][abs_y] == 1){ // is visited
+            if(quad2[abs_x][abs_y]){ // is visited
                 return true;
             }
-            arr2[abs_x][abs_y] = 1;     //is not visited
-            System.out.println("Mark arr2 " + x + " " + y); //print out to test
+            quad2[abs_x][abs_y] = true;     //is not visited
+            System.out.println("Mark quad2 " + x + " " + y); //print out to test
             return false;
         }
         if(x <= 0 && y >= 0){    // section 1
-            if(arr1[abs_x][abs_y] == 1){
+            if(quad1[abs_x][abs_y]){
                 return true;
             }
-            arr1[abs_x][abs_y] = 1;
-            System.out.println("Mark arr1 " + x + " " + y);
+            quad1[abs_x][abs_y] = true;
+            System.out.println("Mark quad1 " + x + " " + y);
             return false;
         }
         if(x >= 0 && y <= 0){ //section 3
-            if(arr3[abs_x][abs_y] == 1){
+            if(quad3[abs_x][abs_y]){
                 return true;
             }
-            arr3[abs_x][abs_y] = 1;
-            System.out.println("Mark arr3 " + x + " " + y);
+            quad3[abs_x][abs_y] = true;
+            System.out.println("Mark quad3 " + x + " " + y);
             return false;
         }
         if(x <= 0 && y <= 0){ //section 4
-            if(arr4[abs_x][abs_y] == 1){
+            if(quad4[abs_x][abs_y]){
                 return true;
             }
-            arr4[abs_x][abs_y] = 1;
-            System.out.println("Mark arr4 " + x + " " + y);
+            quad4[abs_x][abs_y] = true;
+            System.out.println("Mark quad4 " + x + " " + y);
             return false;
         }
         return false;
@@ -61,8 +70,11 @@ public class VisitedMap {
 //        int new_y =  y >= 500 ?  (MAX_COLUMN - Math.abs(y))*-1 : y*-1;
 //        isVisited(new_x,new_y);
 //    }
+    //set the isClear to true
     public void clear(){    //set clear state
         isClear = true;
     }
+
+    //check if isClear true or false
     public boolean isClear(){return isClear;};
 }
