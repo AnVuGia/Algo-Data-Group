@@ -8,18 +8,18 @@ public class Maze {
     int [][]wallRecord;
 
     public Maze() {
-        map = GenerateMaze.phuocArr;
+        map = GenerateMaze.phuoc1000x1000;
         rows = map.length;
         cols = map[0].length();
         wallRecord = new int [rows][cols];
-        robotRow = 298;
-        robotCol = 148;
+        robotRow = 1;
+        robotCol = 1;
         steps = 0;
     }
 
     public void check()
     {
-        String answer = GenerateMaze.answer;
+        String answer = GenerateMaze.answer1000x1000;
         String []arr = answer.split(" ",-1);
         for (int i = 0 ; i < arr.length;i++)
         {
