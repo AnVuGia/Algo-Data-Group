@@ -3,10 +3,13 @@ public class VisitedMap {
     private int MAX_ROW = 1001;
     private int MAX_COLUMN = 1001;
 
-    //declare 4 int array to indicate the 4 relative map position that
-    //the robot can possibly go
+    //since we are creating the relative map to track the movement of the robot
+    //we declare 4 boolean arrays to indicate the 4 quadrants because the initial
+    //position of robot is 0,0 on our relative map. We are not sure if we have
+    //to move back (decrease the columns) or go up (decrease the row) which leads to
+    //negative index value and causes out of bound error.
     private boolean quad1[][] = new boolean[MAX_ROW][MAX_COLUMN]; // -x , y
-    private boolean quad2[][] = new boolean[MAX_ROW][MAX_COLUMN]; //  x, y (0,0)
+    private boolean quad2[][] = new boolean[MAX_ROW][MAX_COLUMN]; //  x, y
     private boolean quad3[][] = new boolean[MAX_ROW][MAX_COLUMN]; // x, -y
     private boolean quad4[][] = new boolean[MAX_ROW][MAX_COLUMN]; // -x, -y
 
@@ -20,22 +23,18 @@ public class VisitedMap {
     }
     public boolean isVisited(int x, int y){
         if(isClear) return true;
-//        if(Math.abs(x) >= MAX_COLUMN/2 || Math.abs(y) >= MAX_COLUMN/2 ){
-//            outOfBound(x,y);
-//        }
         //get the absolute coordinate of x and y to avoid
-        //the negative index
+        //accessing negative index
         int abs_x = Math.abs(x);
         int abs_y = Math.abs(y);
 
-        //With the current value of x and y, check if it has visited the
+        //With the current value of x and y, check if it has visited
         //the relative map according to the 4 quadrants
         if(x >= 0 && y >= 0){           //section 2
             if(quad2[abs_x][abs_y]){ // is visited
                 return true;
             }
             quad2[abs_x][abs_y] = true;     //is not visited
-            System.out.println("Mark quad2 " + x + " " + y); //print out to test
             return false;
         }
         if(x <= 0 && y >= 0){    // section 1
@@ -43,7 +42,6 @@ public class VisitedMap {
                 return true;
             }
             quad1[abs_x][abs_y] = true;
-            System.out.println("Mark quad1 " + x + " " + y);
             return false;
         }
         if(x >= 0 && y <= 0){ //section 3
@@ -51,7 +49,6 @@ public class VisitedMap {
                 return true;
             }
             quad3[abs_x][abs_y] = true;
-            System.out.println("Mark quad3 " + x + " " + y);
             return false;
         }
         if(x <= 0 && y <= 0){ //section 4
@@ -59,17 +56,10 @@ public class VisitedMap {
                 return true;
             }
             quad4[abs_x][abs_y] = true;
-            System.out.println("Mark quad4 " + x + " " + y);
             return false;
         }
         return false;
     }
-    //leave it here just in case
-//    private void outOfBound(int x, int y){  //function to calculate and re-allocate new position for the map
-//        int new_x = x >= 500 ?  (MAX_COLUMN - Math.abs(x))*-1 : x*-1;
-//        int new_y =  y >= 500 ?  (MAX_COLUMN - Math.abs(y))*-1 : y*-1;
-//        isVisited(new_x,new_y);
-//    }
     //set the isClear to true
     public void clear(){    //set clear state
         isClear = true;

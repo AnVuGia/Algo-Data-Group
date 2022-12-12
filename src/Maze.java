@@ -8,15 +8,25 @@ public class Maze {
     int [][]wallRecord;
 
     public Maze() {
-        map = GenerateMaze.phuocArr2;
+        map = GenerateMaze.phuocArr;
         rows = map.length;
         cols = map[0].length();
         wallRecord = new int [rows][cols];
-        robotRow = 1;
-        robotCol = 3;
+        robotRow = 298;
+        robotCol = 148;
         steps = 0;
     }
 
+    public void check()
+    {
+        String answer = GenerateMaze.answer;
+        String []arr = answer.split(" ",-1);
+        for (int i = 0 ; i < arr.length;i++)
+        {
+            answer = this.go(arr[i]);
+        }
+        System.out.println(answer);
+    }
     // implment isValide and printWall to check if the robot hit any wall more than one
     public boolean isValid(){
         for (int i = 0; i < rows;i++)
@@ -71,12 +81,13 @@ public class Maze {
         steps++;
         robotRow = currentRow;
         robotCol = currentCol;
-            System.out.println("go (real): "+ (robotRow-1) + " " + (robotCol-1));
+            System.out.println("go (real): "+ (robotRow) + " " + (robotCol));
         return "true";
     }
 
 }
     public static void main(String[] args) {
+//        (new Maze()).check();
         (new Robot()).navigate();
     }
 }
@@ -132,7 +143,7 @@ class Robot {
             }
         }
         System.out.println("Print out the record of the robot when it hit the wall ");
-        maze.printWallRecord();
+        //maze.printWallRecord();
         System.out.println("Check if no wall was hit twice: "+ String.valueOf(maze.isValid()));
 
     }
@@ -201,6 +212,8 @@ class Robot {
         //if there is no possible direction for robot to go then return null
         return null;
     }
+
+
 
 
 }
