@@ -31,6 +31,6 @@ public boolean isVisited(int x, int y){                                 Cost    
         return false;                                                   C24                         1
     }
 
-Total Cost : C1*1 + C2*2 + C3*3 +C4*4 + .... + C24*1 +C24 *1
+Total Cost : C1*1 + C2*2 + C3*3 +C4*4 + C5* 1 + Max(C6,C7+C8)* 1 .... + C24*1
 Time Complexity: Big O(1)
 

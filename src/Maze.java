@@ -8,7 +8,7 @@ public class Maze {
     int [][]wallRecord;
 
     public Maze() {
-        map = GenerateMaze.phuoc1000x1000;
+        map = GenerateMaze.Phuoc1000x1000;
         rows = map.length;
         cols = map[0].length();
         wallRecord = new int [rows][cols];
@@ -16,7 +16,9 @@ public class Maze {
         robotCol = 998;
         steps = 0;
     }
-    public static String[] stringAnswer (LinkedListStack<State>answer)
+
+    //return the answer in form of array of direction with stack answer input
+    public static String[] arrayAnswer(LinkedListStack<State>answer)
     {
         String[]res = new String [answer.size()-1];
         int index = 0;
@@ -26,15 +28,29 @@ public class Maze {
         }
         return res;
     }
-    public void check(String []arr)
+    //print out the last status of the robot with array of direction
+    public void checkFinalStatus(String []arr)
     {
         String answer = "";
         for (int i = 0 ; i < arr.length;i++)
         {
             answer = this.go(arr[i]);
+            if (answer.equals(false))
+            {
+                System.out.println("INVALID");
+                System.out.println("wall has been detected on the way to the exit");
+                return;
+            }
         }
         System.out.println(answer);
     }
+    public static void printResult (String []answer)
+    {
+        for (int i = 0;  i< answer.length;i++)
+            System.out.print(answer[i] +" ");
+        System.out.println();
+    }
+
     // implment isValide and printWall to check if the robot hit any wall more than one
     public boolean isValid(){
         for (int i = 0; i < rows;i++)
@@ -43,14 +59,6 @@ public class Maze {
 
         return true;
     }
-//    public void printWallRecord(){
-//        for (int i = 0; i < rows;i++) {
-//            for (int j = 0; j < cols; j++) {
-//                System.out.print(String.valueOf(wallRecord[i][j])+" ");
-//            }
-//            System.out.println();
-//        }
-//    }
 
     public String go(String direction) {
         if (!direction.equals("UP") &&
@@ -78,8 +86,8 @@ public class Maze {
         if (map[currentRow].charAt(currentCol) == 'X') {
         // Exit gate
         steps++;
-        System.out.println("go (real): "+ (currentRow) + " " + (currentCol));
-        System.out.println("Steps to reach the Exit gate " + steps);
+        System.out.println("The position  of the Exit Gate : "+ (currentRow) + " " + (currentCol));
+        //System.out.println("Steps to reach the Exit gate " + steps);
         return "win";
     } else if (map[currentRow].charAt(currentCol) == '.') {
         wallRecord[currentRow][currentCol]++;
@@ -90,13 +98,16 @@ public class Maze {
         steps++;
         robotRow = currentRow;
         robotCol = currentCol;
-            System.out.println("go (real): "+ (robotRow) + " " + (robotCol));
+            //System.out.println("go (real): "+ (robotRow) + " " + (robotCol));
         return "true";
     }
 
 }
     public static void main(String[] args) {(new Robot()).navigate();}
 }
+
+
+//--------------------ROBOT OBJECT-------------------------------//
 
 class Robot {
     //declare and initialize the direction variable for the robot.
@@ -147,14 +158,13 @@ class Robot {
                 }
             }
         }
-
+        //check to see if the output is correct
         if (visitedMap.isClear())
         {
             System.out.println("The robot position when input the result: ");
-            (new Maze()).check(Maze.stringAnswer(stack));
+//           (new Maze()).printResult(Maze.stringAnswer(stack));
+            (new Maze()).checkFinalStatus(Maze.arrayAnswer(stack));
         }
-//        System.out.println("Print out the record of the robot when it hit the wall ");
-//        maze.printWallRecord();
         System.out.println("Check if no wall was hit twice: "+ String.valueOf(maze.isValid()));
 
     }

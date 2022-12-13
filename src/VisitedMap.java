@@ -1,7 +1,7 @@
 public class VisitedMap {
     private boolean isClear = false;
-    private int MAX_ROW = 1001;
-    private int MAX_COLUMN = 1001;
+    private int MAX_ROW = 1000;
+    private int MAX_COLUMN = 1000;
 
     //since we are creating the relative map to track the movement of the robot
     //we declare 4 boolean arrays to indicate the 4 quadrants because the initial
