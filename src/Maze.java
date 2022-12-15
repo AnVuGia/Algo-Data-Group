@@ -5,18 +5,118 @@ public class Maze {
     int robotRow;
     int robotCol;
     int steps;
-    int [][]wallRecord;
+    int [][] robotVisitLocation;
 
     public Maze() {
-        map = GenerateMaze.Phuoc1000x1000;
+
+        //-----------------10x10-------------//
+
+        //maze10x10normal
+        map = GenerateMaze.maze10x10_normal;
         rows = map.length;
         cols = map[0].length();
-        wallRecord = new int [rows][cols];
-        robotRow = 998;
-        robotCol = 998;
+        robotVisitLocation = new int [rows][cols];
+        robotRow = 1;
+        robotCol = 4;
         steps = 0;
-    }
 
+//        //maze10x10best
+//        map = GenerateMaze.maze10x10_best;
+//        rows = map.length;
+//        cols = map[0].length();
+//        wallRecord = new int [rows][cols];
+//        robotRow = 1;
+//        robotCol = 1;
+//        steps = 0;
+//
+
+//        //maze10x10worst
+//        map = GenerateMaze.maze10x10_worst;
+//        rows = map.length;
+//        cols = map[0].length();
+//        wallRecord = new int [rows][cols];
+//        robotRow = 1;
+//        robotCol = 1;
+//        steps = 0;
+
+
+        //----------------200x300-------------//
+
+
+//        //maze200x300normal1
+//        map = GenerateMaze.maze200x300_normal1;
+//        rows = map.length;
+//        cols = map[0].length();
+//        wallRecord = new int [rows][cols];
+//        robotRow = 1;
+//        robotCol = 1;
+//        steps = 0;
+//
+//
+//        ////maze200x300normal2
+//        map = GenerateMaze.maze200x300_normal2;
+//        rows = map.length;
+//        cols = map[0].length();
+//        wallRecord = new int [rows][cols];
+//        robotRow = 198;
+//        robotCol = 1;
+//        steps = 0;
+//
+//
+//        //maze200x300_worst
+//        map = GenerateMaze.maze200x300_worst;
+//        rows = map.length;
+//        cols = map[0].length();
+//        wallRecord = new int [rows][cols];
+//        robotRow = 1;
+//        robotCol = 1;
+//        steps = 0;
+
+
+        //--------------1000x1000-----------------//
+
+//        //maze1000x1000_normal1
+//        map = GenerateMaze.maze1000x1000_normal1;
+//        rows = map.length;
+//        cols = map[0].length();
+//        wallRecord = new int [rows][cols];
+//        robotRow = 998;
+//        robotCol = 998;
+//        steps = 0;
+//
+//
+//        ////maze1000x1000_normal2
+//        map = GenerateMaze.maze1000x1000_normal2;
+//        rows = map.length;
+//        cols = map[0].length();
+//        wallRecord = new int [rows][cols];
+//        robotRow = 1;
+//        robotCol = 4;
+//        steps = 0;
+//
+//
+//        //maze1000x1000_worst
+//        map = GenerateMaze.maze1000x1000_worst;
+//        rows = map.length;
+//        cols = map[0].length();
+//        wallRecord = new int [rows][cols];
+//        robotRow = 1;
+//        robotCol = 1;
+//        steps = 0;
+
+
+    }
+    public void print()
+    {
+        for (int i = 0; i < robotVisitLocation.length; i++)
+        {
+            for (int j = 0; j < robotVisitLocation[0].length; j++)
+            {
+                System.out.print(String.valueOf(robotVisitLocation[i][j])+" ");
+            }
+            System.out.println();
+        }
+    }
     //return the answer in form of array of direction with stack answer input
     public static String[] arrayAnswer(LinkedListStack<State>answer)
     {
@@ -32,9 +132,10 @@ public class Maze {
     public void checkFinalStatus(String []arr)
     {
         String answer = "";
+
         for (int i = 0 ; i < arr.length;i++)
         {
-            answer = this.go(arr[i]);
+            answer = this.goCheck(arr[i]);
             if (answer.equals(false))
             {
                 System.out.println("INVALID");
@@ -42,20 +143,21 @@ public class Maze {
                 return;
             }
         }
-        System.out.println(answer);
-    }
-    public static void printResult (String []answer)
-    {
-        for (int i = 0;  i< answer.length;i++)
-            System.out.print(answer[i] +" ");
-        System.out.println();
+
+        if (!this.isValid())
+        {
+            System.out.println("INVALID");
+            System.out.println("The robot revisit some path on the it goes to the exit.");
+        }
+        System.out.println("The final state when it runs the result: "+ answer);
+
     }
 
-    // implment isValide and printWall to check if the robot hit any wall more than one
+    // implment isValid to check if the robot hit any wall more than one
     public boolean isValid(){
         for (int i = 0; i < rows;i++)
             for (int j = 0; j < cols; j++)
-                if (wallRecord[i][j] >1) return false;
+                if (robotVisitLocation[i][j] >1) return false;
 
         return true;
     }
@@ -87,10 +189,10 @@ public class Maze {
         // Exit gate
         steps++;
         System.out.println("The position  of the Exit Gate : "+ (currentRow) + " " + (currentCol));
-        //System.out.println("Steps to reach the Exit gate " + steps);
+        System.out.println("Steps to reach the Exit gate " + steps);
         return "win";
     } else if (map[currentRow].charAt(currentCol) == '.') {
-        wallRecord[currentRow][currentCol]++;
+        robotVisitLocation[currentRow][currentCol]++;
         steps++;
         return "false";
     } else {
@@ -98,11 +200,53 @@ public class Maze {
         steps++;
         robotRow = currentRow;
         robotCol = currentCol;
-            //System.out.println("go (real): "+ (robotRow) + " " + (robotCol));
         return "true";
     }
 
 }
+    public String goCheck(String direction) {
+        if (!direction.equals("UP") &&
+                !direction.equals("DOWN") &&
+                !direction.equals("LEFT") &&
+                !direction.equals("RIGHT")) {
+            // invalid direction
+            steps++;
+            return "false";
+        }
+        int currentRow = robotRow;
+        int currentCol = robotCol;
+        if (direction.equals("UP")) {
+            currentRow--;
+        } else if (direction.equals("DOWN")) {
+            currentRow++;
+        } else if (direction.equals("LEFT")) {
+            currentCol--;
+        } else {
+            currentCol++;
+        }
+
+        robotVisitLocation[currentRow][currentCol]++;
+        // check the next position
+        if (map[currentRow].charAt(currentCol) == 'X') {
+
+            // Exit gate
+            steps++;
+            System.out.println("The position  of the Exit Gate : "+ (currentRow) + " " + (currentCol));
+            System.out.println("Steps to reach the Exit gate " + steps);
+            return "win";
+        } else if (map[currentRow].charAt(currentCol) == '.') {
+
+            steps++;
+            return "false";
+        } else {
+            // Space => update robot location
+            steps++;
+            robotRow = currentRow;
+            robotCol = currentCol;
+            return "true";
+        }
+
+    }
     public static void main(String[] args) {(new Robot()).navigate();}
 }
 
@@ -121,7 +265,6 @@ class Robot {
         VisitedMap visitedMap = new VisitedMap();
         LinkedListStack<State> stack = new LinkedListStack<>();
         Maze maze = new Maze();
-        String result = "";
 
         //initialize the begin_state which is the current position of the robot.
         State begin_state = new State(0,0,maze,visitedMap,"bottom");
@@ -135,37 +278,34 @@ class Robot {
             State next_state = searchIterative(current_state.x, current_state.y, maze,visitedMap,
                     current_state.prev_direc);
 
-            //if the robot find the good position to go
+            //if the robot find the possible path to go
             //we then add the state to the stack
             if(next_state!= null){
-                System.out.println("Push: " + next_state.x + " " + next_state.y);
                 stack.push(next_state);
-            } else { //otherwise if the robot reach the dead-end,
-                    //it would need to traverse back using the
-                    //prev_direc from the latest state  to traverse
-                    //back to previous position.
+            } else { //otherwise if the robot reach the dead-end, it would
+                    // need to traverse in the opposite direction of the
+                    //prev_direc from the latest state.
                 if(current_state.prev_direc.equals(_UP)) maze.go(_DOWN);
                 else if (current_state.prev_direc.equals(_DOWN)) maze.go(_UP);
                 else if (current_state.prev_direc.equals(_LEFT)) maze.go(_RIGHT);
                 else if (current_state.prev_direc.equals(_RIGHT)) maze.go(_LEFT);
-                System.out.println("Pop: " + current_state.x + " " + current_state.y);
                 // pop out the latest state out of the stack once traverse successfully
                 stack.pop();
-                //escape the function when no solution found
+                //if the stack is empty indicating no solution was found
+                //terminate the loop print out no solution statement
                 if(stack.isEmpty()) {
                     System.out.println("No solution?");
                     break;
                 }
             }
         }
-        //check to see if the output is correct
+        System.out.println("-------CHECKING STATE-------");
         if (visitedMap.isClear())
         {
-            System.out.println("The robot position when input the result: ");
-//           (new Maze()).printResult(Maze.stringAnswer(stack));
+            System.out.println("Check if no wall was hit twice: "+ String.valueOf(maze.isValid()));
             (new Maze()).checkFinalStatus(Maze.arrayAnswer(stack));
         }
-        System.out.println("Check if no wall was hit twice: "+ String.valueOf(maze.isValid()));
+
 
     }
     //x: row(up, down) , y : column(left, right)
@@ -173,17 +313,15 @@ class Robot {
         //first check if the robot already visited the place below
         //the robot itself before it can go down
         if (!visitedMap.isVisited(x + 1, y )) {
-            //check if the robot going down reach the escape position.
             String state = maze.go(_DOWN);
-            //print out the result and clear the visitedMap flag to indicate
-            //escape found and no need for check the visitedMap further.
+            //if the robot goes down reach the escape position, clear the
+            // visitedMap flag to indicate escape position was found and
+            // no need for check the visitedMap further.
             if (state.equals("win")) {
                 visitedMap.clear();
                 return new State(x + 1,y,maze,visitedMap,_DOWN);
             } else if (state.equals("true")) {
-                //if we find out the new path, then add up the possible
-                //direction to the result and return the movement state.
-                System.out.println("go " + (x+1)  + " " + (y) );
+                //if we find out the new path, then return the movement state.
                 return new State((x+1),y,maze,visitedMap,_DOWN);
             }
         }
@@ -195,7 +333,6 @@ class Robot {
                 visitedMap.clear();
                 return new State(x,y+ 1 ,maze,visitedMap,prev_direc);
             } else if (state.equals("true")) {
-                System.out.println("go " +x + " " + (y+1) );
                 return new State(x ,y+1,maze,visitedMap,_RIGHT);
             }
         }
@@ -205,7 +342,6 @@ class Robot {
                 visitedMap.clear();     //set boolean state in VisitedMap
                 return new State(x - 1,y,maze,visitedMap,_UP);
             } else if (state.equals("true")) {
-                System.out.println("go " + (x-1) + " " + y);
                 return new State(x - 1,y ,maze,visitedMap,_UP);
             }
         }
@@ -216,7 +352,6 @@ class Robot {
                 visitedMap.clear();
                 return new State(x,y- 1,maze,visitedMap,_LEFT);            }
             else if (state.equals("true")) {
-                System.out.println("go " +(x) + " " +( y- 1));
                 return new State(x,y - 1,maze,visitedMap,_LEFT);
             }
         }
