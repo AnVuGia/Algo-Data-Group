@@ -11,33 +11,33 @@ public class Maze {
 
         //-----------------10x10-------------//
 
-        //maze10x10normal
-        map = GenerateMaze.maze10x10_normal;
-        rows = map.length;
-        cols = map[0].length();
-        robotVisitLocation = new int [rows][cols];
-        robotRow = 1;
-        robotCol = 4;
-        steps = 0;
-
+//        //maze10x10normal
+//        map = GenerateMaze.maze10x10_normal;
+//        rows = map.length;
+//        cols = map[0].length();
+//        robotVisitLocation = new int [rows][cols];
+//        robotRow = 1;
+//        robotCol = 4;
+//        steps = 0;
+//
 //        //maze10x10best
 //        map = GenerateMaze.maze10x10_best;
 //        rows = map.length;
 //        cols = map[0].length();
-//        wallRecord = new int [rows][cols];
+//        robotVisitLocation = new int [rows][cols];
 //        robotRow = 1;
 //        robotCol = 1;
 //        steps = 0;
-//
 
-//        //maze10x10worst
-//        map = GenerateMaze.maze10x10_worst;
-//        rows = map.length;
-//        cols = map[0].length();
-//        wallRecord = new int [rows][cols];
-//        robotRow = 1;
-//        robotCol = 1;
-//        steps = 0;
+
+        //maze10x10worst
+        map = GenerateMaze.maze10x10_worst;
+        rows = map.length;
+        cols = map[0].length();
+        robotVisitLocation = new int [rows][cols];
+        robotRow = 1;
+        robotCol = 1;
+        steps = 0;
 
 
         //----------------200x300-------------//
@@ -47,7 +47,7 @@ public class Maze {
 //        map = GenerateMaze.maze200x300_normal1;
 //        rows = map.length;
 //        cols = map[0].length();
-//        wallRecord = new int [rows][cols];
+//        robotVisitLocation = new int [rows][cols];
 //        robotRow = 1;
 //        robotCol = 1;
 //        steps = 0;
@@ -57,7 +57,7 @@ public class Maze {
 //        map = GenerateMaze.maze200x300_normal2;
 //        rows = map.length;
 //        cols = map[0].length();
-//        wallRecord = new int [rows][cols];
+//        robotVisitLocation = new int [rows][cols];
 //        robotRow = 198;
 //        robotCol = 1;
 //        steps = 0;
@@ -67,7 +67,7 @@ public class Maze {
 //        map = GenerateMaze.maze200x300_worst;
 //        rows = map.length;
 //        cols = map[0].length();
-//        wallRecord = new int [rows][cols];
+//        robotVisitLocation = new int [rows][cols];
 //        robotRow = 1;
 //        robotCol = 1;
 //        steps = 0;
@@ -79,7 +79,7 @@ public class Maze {
 //        map = GenerateMaze.maze1000x1000_normal1;
 //        rows = map.length;
 //        cols = map[0].length();
-//        wallRecord = new int [rows][cols];
+//        robotVisitLocation = new int [rows][cols];
 //        robotRow = 998;
 //        robotCol = 998;
 //        steps = 0;
@@ -89,7 +89,7 @@ public class Maze {
 //        map = GenerateMaze.maze1000x1000_normal2;
 //        rows = map.length;
 //        cols = map[0].length();
-//        wallRecord = new int [rows][cols];
+//        robotVisitLocation = new int [rows][cols];
 //        robotRow = 1;
 //        robotCol = 4;
 //        steps = 0;
@@ -99,7 +99,7 @@ public class Maze {
 //        map = GenerateMaze.maze1000x1000_worst;
 //        rows = map.length;
 //        cols = map[0].length();
-//        wallRecord = new int [rows][cols];
+//        robotVisitLocation = new int [rows][cols];
 //        robotRow = 1;
 //        robotCol = 1;
 //        steps = 0;
@@ -331,7 +331,7 @@ class Robot {
             String state = maze.go(_RIGHT);
             if (state.equals("win")) {
                 visitedMap.clear();
-                return new State(x,y+ 1 ,maze,visitedMap,prev_direc);
+                return new State(x,y+ 1 ,maze,visitedMap,_RIGHT);
             } else if (state.equals("true")) {
                 return new State(x ,y+1,maze,visitedMap,_RIGHT);
             }
