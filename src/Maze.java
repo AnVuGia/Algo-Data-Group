@@ -5,161 +5,21 @@ public class Maze {
     int robotRow;
     int robotCol;
     int steps;
-    int [][] robotVisitLocation;
+
 
     public Maze() {
-
-        //-----------------10x10-------------//
-
-//        //maze10x10normal
-//        map = GenerateMaze.maze10x10_normal;
-//        rows = map.length;
-//        cols = map[0].length();
-//        robotVisitLocation = new int [rows][cols];
-//        robotRow = 1;
-//        robotCol = 4;
-//        steps = 0;
-//
-//        //maze10x10best
-//        map = GenerateMaze.maze10x10_best;
-//        rows = map.length;
-//        cols = map[0].length();
-//        robotVisitLocation = new int [rows][cols];
-//        robotRow = 1;
-//        robotCol = 1;
-//        steps = 0;
-
-
-        //maze10x10worst
-        map = GenerateMaze.maze10x10_worst;
-        rows = map.length;
-        cols = map[0].length();
-        robotVisitLocation = new int [rows][cols];
-        robotRow = 1;
+        // Note: in my real test, I will create much larger
+        // and more complicated map
+        rows = 4;
+        cols = 5;
+        map = new String[rows];
+        map[0] = ".....";
+        map[1] = ".   X";
+        map[2] = ".   .";
+        map[3] = ".....";
+        robotRow = 2;
         robotCol = 1;
         steps = 0;
-
-
-        //----------------200x300-------------//
-
-
-//        //maze200x300normal1
-//        map = GenerateMaze.maze200x300_normal1;
-//        rows = map.length;
-//        cols = map[0].length();
-//        robotVisitLocation = new int [rows][cols];
-//        robotRow = 1;
-//        robotCol = 1;
-//        steps = 0;
-//
-//
-//        ////maze200x300normal2
-//        map = GenerateMaze.maze200x300_normal2;
-//        rows = map.length;
-//        cols = map[0].length();
-//        robotVisitLocation = new int [rows][cols];
-//        robotRow = 198;
-//        robotCol = 1;
-//        steps = 0;
-//
-//
-//        //maze200x300_worst
-//        map = GenerateMaze.maze200x300_worst;
-//        rows = map.length;
-//        cols = map[0].length();
-//        robotVisitLocation = new int [rows][cols];
-//        robotRow = 1;
-//        robotCol = 1;
-//        steps = 0;
-
-
-        //--------------1000x1000-----------------//
-
-//        //maze1000x1000_normal1
-//        map = GenerateMaze.maze1000x1000_normal1;
-//        rows = map.length;
-//        cols = map[0].length();
-//        robotVisitLocation = new int [rows][cols];
-//        robotRow = 998;
-//        robotCol = 998;
-//        steps = 0;
-//
-//
-//        ////maze1000x1000_normal2
-//        map = GenerateMaze.maze1000x1000_normal2;
-//        rows = map.length;
-//        cols = map[0].length();
-//        robotVisitLocation = new int [rows][cols];
-//        robotRow = 1;
-//        robotCol = 4;
-//        steps = 0;
-//
-//
-//        //maze1000x1000_worst
-//        map = GenerateMaze.maze1000x1000_worst;
-//        rows = map.length;
-//        cols = map[0].length();
-//        robotVisitLocation = new int [rows][cols];
-//        robotRow = 1;
-//        robotCol = 1;
-//        steps = 0;
-
-
-    }
-    public void print()
-    {
-        for (int i = 0; i < robotVisitLocation.length; i++)
-        {
-            for (int j = 0; j < robotVisitLocation[0].length; j++)
-            {
-                System.out.print(String.valueOf(robotVisitLocation[i][j])+" ");
-            }
-            System.out.println();
-        }
-    }
-    //return the answer in form of array of direction with stack answer input
-    public static String[] arrayAnswer(LinkedListStack<State>answer)
-    {
-        String[]res = new String [answer.size()-1];
-        int index = 0;
-        while (answer.size()>1){
-            res[answer.size()-index-2] = answer.peek().prev_direc;
-            answer.pop();
-        }
-        return res;
-    }
-    //print out the last status of the robot with array of direction
-    public void checkFinalStatus(String []arr)
-    {
-        String answer = "";
-
-        for (int i = 0 ; i < arr.length;i++)
-        {
-            answer = this.goCheck(arr[i]);
-            if (answer.equals(false))
-            {
-                System.out.println("INVALID");
-                System.out.println("wall has been detected on the way to the exit");
-                return;
-            }
-        }
-
-        if (!this.isValid())
-        {
-            System.out.println("INVALID");
-            System.out.println("The robot revisit some path on the it goes to the exit.");
-        }
-        System.out.println("The final state when it runs the result: "+ answer);
-
-    }
-
-    // implment isValid to check if the robot hit any wall more than one
-    public boolean isValid(){
-        for (int i = 0; i < rows;i++)
-            for (int j = 0; j < cols; j++)
-                if (robotVisitLocation[i][j] >1) return false;
-
-        return true;
     }
 
     public String go(String direction) {
@@ -188,11 +48,9 @@ public class Maze {
         if (map[currentRow].charAt(currentCol) == 'X') {
         // Exit gate
         steps++;
-        System.out.println("The position  of the Exit Gate : "+ (currentRow) + " " + (currentCol));
         System.out.println("Steps to reach the Exit gate " + steps);
         return "win";
     } else if (map[currentRow].charAt(currentCol) == '.') {
-        robotVisitLocation[currentRow][currentCol]++;
         steps++;
         return "false";
     } else {
@@ -204,49 +62,6 @@ public class Maze {
     }
 
 }
-    public String goCheck(String direction) {
-        if (!direction.equals("UP") &&
-                !direction.equals("DOWN") &&
-                !direction.equals("LEFT") &&
-                !direction.equals("RIGHT")) {
-            // invalid direction
-            steps++;
-            return "false";
-        }
-        int currentRow = robotRow;
-        int currentCol = robotCol;
-        if (direction.equals("UP")) {
-            currentRow--;
-        } else if (direction.equals("DOWN")) {
-            currentRow++;
-        } else if (direction.equals("LEFT")) {
-            currentCol--;
-        } else {
-            currentCol++;
-        }
-
-        robotVisitLocation[currentRow][currentCol]++;
-        // check the next position
-        if (map[currentRow].charAt(currentCol) == 'X') {
-
-            // Exit gate
-            steps++;
-            System.out.println("The position  of the Exit Gate : "+ (currentRow) + " " + (currentCol));
-            System.out.println("Steps to reach the Exit gate " + steps);
-            return "win";
-        } else if (map[currentRow].charAt(currentCol) == '.') {
-
-            steps++;
-            return "false";
-        } else {
-            // Space => update robot location
-            steps++;
-            robotRow = currentRow;
-            robotCol = currentCol;
-            return "true";
-        }
-
-    }
     public static void main(String[] args) {(new Robot()).navigate();}
 }
 
@@ -260,8 +75,8 @@ class Robot {
     private String _LEFT = "LEFT";
     private String _RIGHT = "RIGHT";
 
-    public void navigate() {
-        //declare the and initialize vistedMap, state Stack and maze
+    public void navigate(){
+        //declare the and initialize visitedMap, state Stack and maze
         VisitedMap visitedMap = new VisitedMap();
         LinkedListStack<State> stack = new LinkedListStack<>();
         Maze maze = new Maze();
@@ -299,50 +114,42 @@ class Robot {
                 }
             }
         }
-        System.out.println("-------CHECKING STATE-------");
-        if (visitedMap.isClear())
-        {
-            System.out.println("Check if no wall was hit twice: "+ String.valueOf(maze.isValid()));
-            (new Maze()).checkFinalStatus(Maze.arrayAnswer(stack));
-        }
-
-
     }
     //x: row(up, down) , y : column(left, right)
-    private State searchIterative(int x, int y, Maze maze, VisitedMap visitedMap, String prev_direc){
+    private State searchIterative(int x, int y, Maze maze, VisitedMap visitedMap, String prev_direc) {
         //first check if the robot already visited the place below
         //the robot itself before it can go down
-        if (!visitedMap.isVisited(x + 1, y )) {
+        if (!visitedMap.isVisited(x + 1, y)) {
             String state = maze.go(_DOWN);
             //if the robot goes down reach the escape position, clear the
             // visitedMap flag to indicate escape position was found and
             // no need for check the visitedMap further.
             if (state.equals("win")) {
                 visitedMap.clear();
-                return new State(x + 1,y,maze,visitedMap,_DOWN);
+                return new State(x + 1, y, maze, visitedMap, _DOWN);
             } else if (state.equals("true")) {
                 //if we find out the new path, then return the movement state.
-                return new State((x+1),y,maze,visitedMap,_DOWN);
+                return new State((x + 1), y, maze, visitedMap, _DOWN);
             }
         }
         //if the robot hit the wall when it goes down then
         //try to go right this time and repeat the same process.
-        if (!visitedMap.isVisited(x, y + 1 )) { // go right
+        if (!visitedMap.isVisited(x, y + 1)) { // go right
             String state = maze.go(_RIGHT);
             if (state.equals("win")) {
                 visitedMap.clear();
-                return new State(x,y+ 1 ,maze,visitedMap,_RIGHT);
+                return new State(x, y + 1, maze, visitedMap, _RIGHT);
             } else if (state.equals("true")) {
-                return new State(x ,y+1,maze,visitedMap,_RIGHT);
+                return new State(x, y + 1, maze, visitedMap, _RIGHT);
             }
         }
-        if (!visitedMap.isVisited(x - 1, y )) { // go up
+        if (!visitedMap.isVisited(x - 1, y)) { // go up
             String state = maze.go(_UP);
             if (state.equals("win")) {  //check if condition is match
                 visitedMap.clear();     //set boolean state in VisitedMap
-                return new State(x - 1,y,maze,visitedMap,_UP);
+                return new State(x - 1, y, maze, visitedMap, _UP);
             } else if (state.equals("true")) {
-                return new State(x - 1,y ,maze,visitedMap,_UP);
+                return new State(x - 1, y, maze, visitedMap, _UP);
             }
         }
 
@@ -350,16 +157,12 @@ class Robot {
             String state = maze.go(_LEFT);
             if (state.equals("win")) {
                 visitedMap.clear();
-                return new State(x,y- 1,maze,visitedMap,_LEFT);            }
-            else if (state.equals("true")) {
-                return new State(x,y - 1,maze,visitedMap,_LEFT);
+                return new State(x, y - 1, maze, visitedMap, _LEFT);
+            } else if (state.equals("true")) {
+                return new State(x, y - 1, maze, visitedMap, _LEFT);
             }
         }
         //if there is no possible direction for robot to go then return null
         return null;
     }
-
-
-
-
 }
