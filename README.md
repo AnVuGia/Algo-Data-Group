@@ -23,8 +23,8 @@ ___
 ### II. PROJECT LINKS
 
  - [**GITHUB REPOSITORY**](https://github.com/AnVuGia/Algo-Data-Group.git)
- - [**YOUTUBE VIDEO DEMONSTRATION**]()
- - [**ONEDRIVE VIDEO DEMONSTRATION**]()
+ - [**YOUTUBE VIDEO DEMONSTRATION**](https://youtu.be/wVUs5pL8S0M)
+ - [**ONEDRIVE VIDEO DEMONSTRATION**](https://rmiteduau-my.sharepoint.com/:v:/g/personal/s3878270_rmit_edu_vn/ETq1ECvpYUZJtFCz4r0vXZIBSBAFYgOr8NTeeufxCM4p5Q?e=fCoh56)
 
 ___
 
